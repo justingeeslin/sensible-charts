@@ -15,8 +15,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // 'https://code.jquery.com/jquery-3.1.1.min.js',
-      // 'http://d3js.org/d3.v3.js',
+      'https://code.jquery.com/jquery-3.1.1.min.js',
+      'http://d3js.org/d3.v3.js',
       // 'node_modules/c3/c3.js',
       'node_modules/c3/c3.css',
 			'dist/app.js',
