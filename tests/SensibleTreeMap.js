@@ -1,7 +1,7 @@
 describe('SensibleTreeMap', function() {
 
 		beforeAll(function() {
-			$(document.body).empty()
+			// $(document.body).empty()
 		});
 
 		it('should construct', function() {
