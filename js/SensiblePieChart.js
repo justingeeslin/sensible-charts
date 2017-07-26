@@ -51,5 +51,4 @@ function SensiblePieChart( options ) {
   return this;
 }
 
-window.SensiblePieChart = SensiblePieChart;
 module.exports = SensiblePieChart;
