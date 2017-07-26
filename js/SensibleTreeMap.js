@@ -1,11 +1,8 @@
-// const $ = require('jquery');
-// window.$ = $;
-// const d3 = require('d3');
+const d3 = require('d3');
 
 function SensibleTreeMap( options ) {
   var self = this;
   extend = require('extend');
-
 
   var defaults = {
     sel: 'body',
@@ -39,16 +36,8 @@ function SensibleTreeMap( options ) {
     }
   }
 
-  // // Do an early 'inheritance' just for the selector because we use it to calculate some smarter defaults (width and height)
-  // this.sel = typeof options !== "undefined" && typeof options.sel !== "undefined" ? options.sel : defaults.sel
-  //
-  // defaults.width = $(this.sel).width()
-  // defaults.height = $(this.sel).height()
-
   self = extend(self, defaults)
   self = extend(self, options)
-
-  console.log('Creating treemap with data', this.data)
 
   d3.select(this.sel).append('svg')
     .attr('width',this.width)

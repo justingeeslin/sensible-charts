@@ -63,7 +63,7 @@ describe('SensibleTreeMap', function() {
 					]
 				}
 			});
-			expect(d3.select('#chart2').select('svg').text()).toBe("DashboardResfaqnew")
+			expect(d3.select('#chart2').select('svg').text()).toBe("All Visits to Help (from another page)MonitorSetupCreateCharlie BrownLinusPeppermint PattySnoopyD O Double G")
     });
 
 		afterAll(function() {
