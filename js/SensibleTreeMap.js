@@ -1,8 +1,8 @@
 const d3 = require('d3');
+const extend = require('extend');
 
 function SensibleTreeMap( options ) {
   var self = this;
-  extend = require('extend');
 
   var defaults = {
     sel: 'body',
