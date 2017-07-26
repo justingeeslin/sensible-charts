@@ -6,81 +6,92 @@ function SensibleTreeMap( options ) {
   var self = this;
   extend = require('extend');
 
+
   var defaults = {
-    sel: '#chart',
+    sel: 'body',
     width: 960,
     height: 500,
-    color: d3.scale.category20c()
+    data: {
+      "name": "A1",
+      "children": [
+        {
+          "name": "B1",
+          "children": [
+            {
+              "name": "C1",
+              "value": 100
+            },
+            {
+              "name": "C2",
+              "value": 300
+            },
+            {
+              "name": "C3",
+              "value": 200
+            }
+          ]
+        },
+        {
+          "name": "B2",
+          "value": 200
+        }
+      ]
+    }
   }
+
+  // // Do an early 'inheritance' just for the selector because we use it to calculate some smarter defaults (width and height)
+  // this.sel = typeof options !== "undefined" && typeof options.sel !== "undefined" ? options.sel : defaults.sel
+  //
+  // defaults.width = $(this.sel).width()
+  // defaults.height = $(this.sel).height()
 
   self = extend(self, defaults)
   self = extend(self, options)
 
-  console.log('Creating treemap..')
-  var theTreeMap = d3.layout.treemap()
-    .size(this.width, this.height)
-    .sticky(true)
-    .value(function(d) {return d.size })
+  console.log('Creating treemap with data', this.data)
 
-  var div = d3.select(this.sel).append('div')
-    .style("position", "relative")
-    .style("width", this.width + "px")
-    .style("height", this.height + "px");
+  d3.select(this.sel).append('svg')
+    .attr('width',this.width)
+    .attr('height',this.height)
+    .append('g')
 
-  var data = {
-    name: "tree",
-    children: [
-      {
-        name: "Monitor Dashboard",
-        size: 16000,
-        children: {
-          name: "Frequently Resources",
-          size: 8000
-        }
-      },
-        { name: "animate makes things fun", size: 8000 },
-        { name: "data data everywhere...", size: 5220 },
-        { name: "display something beautiful", size: 3623 }
-      ]
-    }
+  var partitionLayout = d3.partition()
+    .size([this.width, this.height]);
 
-  div.data([data]).selectAll('div')
-    .data(theTreeMap.nodes)
-    .enter().append('div')
-    // .attr('class', 'cell')
-    .style('border', 'solid 1px white')
-    .style('overflow', 'hidden')
-    .style('font', '10px sans-serif')
-    .style('line-height', '12px')
-    .style('position', 'absolute')
-    .style('text-indent', '2px')
-    .attr("name", function(d) {
-      return d.name;
-    } )
-    .attr("name", function(d) {
-      return d.name;
-    } )
-    .style("background", function(d) {
-      return d.children ? self.color(d.name) : null;
-    } )
-    .attr({x: 8, y:8})
-    .attr('x', 7)
-    .call(cell)
-    .text(function(d) { return d.children ? null : d.name; });
+  var rootNode = d3.hierarchy(this.data)
 
-  // div.selectAll("div").data(theTreeMap.value(function(d) { return d.size; })).call(cell)
+  rootNode.sum(function(d) {
+    return d.value;
+  });
 
-  function cell() {
-     this.style("left", function(d) {
-       console.log('Creating cell..', d.x);
-       return d.x + "px";
-     })
-      .style("top", function(d) { return d.y + "px"; })
-      .style("width", function(d) { return d.dx - 1 + "px"; })
-      .style("height", function(d) { return d.dy - 1 + "px"; });
-   }
+  partitionLayout(rootNode);
 
-   return this;
+  var nodes = d3.select(this.sel).select('svg g')
+    .selectAll('g')
+    .data(rootNode.descendants())
+    .enter()
+    .append('g')
+    .attr('transform', function(d) {return 'translate(' + [d.y0, d.x0] + ')'})
+
+  nodes
+    .append('rect')
+    .attr('fill', '#333')
+    .attr('stroke', 'white')
+    // .attr('x', function(d) { return d.y0; })
+    // .attr('y', function(d) { return d.x0; })
+    .attr('width', function(d) { return d.y1 - d.y0; })
+    .attr('height', function(d) { return d.x1 - d.x0; })
+
+  nodes
+    .append('text')
+    .attr('dx', 4)
+    .attr('dy', 14)
+    .attr('fill', 'white')
+    .text(function(d) {
+      return d.data.name;
+    })
+
+  return this;
 }
 
 module.exports = SensibleTreeMap

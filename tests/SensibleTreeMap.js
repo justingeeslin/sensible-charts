@@ -2,13 +2,44 @@ describe('SensibleTreeMap', function() {
 
 		beforeAll(function() {
 			$(document.body).empty()
-			$(document.body).append($('<div id="chart"></div>'));
 		});
 
 		it('should construct', function() {
 			myFirst = new SensibleTreeMap();
 			expect(myFirst instanceof SensibleTreeMap).toBe(true)
-			// expect($('.chart.visitors').children('svg').length > 0).toBe(true)
+    });
+
+		it('should draw a treemap to the default container with the default data', function() {
+			$(document.body).append($('<div id="chart"></div>'));
+			myFirst = new SensibleTreeMap({
+				sel: '#chart'
+			});
+			expect(d3.select('#chart').select('svg').text()).toBe("A1B1B2C1C2C3")
+    });
+
+		it('should draw a treemap to the default container with custom data', function() {
+			$(document.body).append($('<div id="chart2"></div>'));
+			myFirst = new SensibleTreeMap({
+				sel: '#chart2',
+				data: {
+		      "name": "Dashboard",
+		      "children": [
+						{
+							"name": "Res",
+							"value": 100
+						},
+						{
+							"name": "faq",
+							"value": 300
+						},
+						{
+							"name": "new",
+							"value": 200
+						}
+					]
+				}
+			});
+			expect(d3.select('#chart2').select('svg').text()).toBe("DashboardResfaqnew")
     });
 
 		afterAll(function() {
