@@ -22,19 +22,43 @@ describe('SensibleTreeMap', function() {
 			myFirst = new SensibleTreeMap({
 				sel: '#chart2',
 				data: {
-		      "name": "Dashboard",
+		      "name": "All Visits to Help (from another page)",
+					value: 500,
 		      "children": [
 						{
-							"name": "Res",
-							"value": 100
+							"name": "Monitor",
+							"children": [
+								{
+									"name": "Charlie Brown",
+									"value": 10
+								},
+								{
+									"name": "Linus",
+									"value": 10
+								},
+								{
+									"name": "Peppermint Patty",
+									"value": 80
+								}
+							]
 						},
 						{
-							"name": "faq",
-							"value": 300
+							"name": "Setup",
+							"children": [
+								{
+									"name": "Snoopy",
+									"value": 1
+								},
+							]
 						},
 						{
-							"name": "new",
-							"value": 200
+							"name": "Create",
+							"children": [
+								{
+									"name": "D O Double G",
+									"value": 2
+								},
+							]
 						}
 					]
 				}
