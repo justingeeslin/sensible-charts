@@ -77,8 +77,6 @@ function SensibleTreeMap( options ) {
     .append('rect')
     .attr('fill', '#333')
     .attr('stroke', 'white')
-    // .attr('x', function(d) { return d.y0; })
-    // .attr('y', function(d) { return d.x0; })
     .attr('width', function(d) { return d.y1 - d.y0; })
     .attr('height', function(d) { return d.x1 - d.x0; })
 
