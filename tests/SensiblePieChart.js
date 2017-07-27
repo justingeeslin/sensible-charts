@@ -11,7 +11,7 @@ describe('SensiblePieChart', function() {
 			expect($('#pie').children('svg').length > 0).toBe(true)
     });
 
-		it('should display custom data', function() {
+		it('should display custom data', function(done) {
 			$(document.body).append($('<div class="chart visitors" id="pie2"></div>'));
 			myFirstPieChart = new SensiblePieChart({
 				sel: '#pie2',
@@ -25,6 +25,7 @@ describe('SensiblePieChart', function() {
 			});
 			window.setTimeout(function() {
 				expect(d3.select('#pie2').select('svg').text()).toBe("33%53%13%SnoopyCharlie BrownPeppermint Patty")
+				done()
 			}, 50)
 
     });
