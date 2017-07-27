@@ -50,6 +50,23 @@ describe('SensiblePieChart', function() {
 
     });
 
+		it('should custom data with simplified data object', function(done) {
+			$(document.body).append($('<div class="chart visitors" id="pie4"></div>'));
+			myFirstPieChart = new SensiblePieChart({
+				sel: '#pie4',
+			  data: {
+		  		"Mobile" : 40,
+					"Desktop" : 50,
+					"Other" : 10
+		  	}
+			});
+			window.setTimeout(function() {
+				expect(d3.select('#pie4').select('svg').text()).toBe("40%50%10%MobileDesktopOther")
+				done()
+			}, 50)
+
+    });
+
 		afterAll(function() {
 
 		});

@@ -31,6 +31,19 @@ function SensiblePieChart( options ) {
   self = extend(this, defaults)
   self = extend(this, options)
 
+  // Transformed from the simplied object data layout (key-value pairs)
+  if (typeof this.data === "object" && typeof this.data.content === "undefined") {
+    var newData = {
+      content: []
+    }
+    for(var i in this.data) {
+      newData.content.push({ label: i, value: this.data[i]});
+    }
+    this.data = newData;
+  }
+
+  console.log('New data after simple object layout: ', this.data);
+
   //Augment data with colors
   var colorI = 0
   for( var i in this.data.content) {
